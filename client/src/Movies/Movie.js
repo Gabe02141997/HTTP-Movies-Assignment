@@ -38,6 +38,11 @@ updateMovie = (e) => {
  console.log(this.state.movie)
 }
 
+deleteMovie = id => {
+  
+  axios.delete(`http://localhost:5000/api/movies/${id}`)
+}
+
   render() {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
@@ -47,6 +52,7 @@ updateMovie = (e) => {
       <div className="save-wrapper">
         <MovieCard movie={this.state.movie} />
         <button onClick={this.updateMovie}>Edit</button>
+        <button onClick={() =>this.deleteMovie(this.state.movie.id)}>Delete Movie</button>
         <div className="save-button" onClick={this.saveMovie}>
           save
         </div>

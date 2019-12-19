@@ -49,11 +49,25 @@ const changeHandler = e => {
 }
 
 console.log(movieForm.id)
-// const editMovie = (e) => {
-//  e.preventDefault();
-//  axios.put(`http://localhost:5000/api/movies/${movieForm.id}`, movieForm)
-
-// }
+const updateMovie = (e) => {
+ e.preventDefault();
+ axios.put(`http://localhost:5000/api/movies/${movieForm.id}`, movieForm)
+.then(res => {
+    const updatedMovieList = props.movies.map(movie => {
+        if(movie.id === movieForm.id) {
+            return movie = res.data
+        } else {
+            return movie
+        }
+       
+    })
+    props.setMovie(updatedMovieList)
+    props.history.push('/')
+})
+.catch(error => {
+    console.log(error)
+})
+}
 
     return (
         <div>
@@ -62,11 +76,11 @@ console.log(movieForm.id)
             <TextField variant ='outlined' id ='standard-basic'name ='title' value={movieForm.title} onChange={changeHandler} type ='text' label='Title' className='input-field'/>
             <TextField  variant ='outlined' name ='director' value={movieForm.director} onChange={changeHandler} type ='text'
             label='Director' className='input-field'/>
-            <TextField  variant ='outlined' name ='metscore' value={movieForm.metascore} onChange={changeHandler} type ='number'
+            <TextField  variant ='outlined' name ='metascore' value={movieForm.metascore} onChange={changeHandler} type ='number'
             label='Metascore' className='input-field'/>
             <TextField  variant ='outlined' name ='stars' value={movieForm.stars} onChange={changeHandler} type ='text'
             label='Stars' className='input-field'/>
-            <Button variant ='contained' color ='primary'>Post User</Button>
+            <Button onClick ={updateMovie} variant ='contained' color ='primary'>Update Movie</Button>
         </form>
     </div>
         </div>
